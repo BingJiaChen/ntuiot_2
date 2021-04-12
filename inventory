@@ -1,0 +1,5 @@
+[server]
+root@140.112.18.2 ansible_port=11011 anisible_user=root
+root@140.112.18.2 ansible_port=11012 anisible_user=root
+[server:vars]
+file_path=/home/bingjia/workspace/rpi/

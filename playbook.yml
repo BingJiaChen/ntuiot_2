@@ -1,0 +1,37 @@
+---
+- hosts: server
+  become: yes
+  tasks:
+    
+    - name: test connection
+      ping:
+      register: message
+
+    
+    - name: print debug message
+      debug:
+        msg: "{{ message }}"
+    
+    - name: create directory
+      file:
+        path: /home/user/rpi
+        state: directory
+        mode: 0644
+
+    
+    - copy:
+        src: "{{file_path}}"
+        dest: /home/user/
+    
+    - command: pip3 install RPi.GPIO
+    
+    - command: python3 /home/user/rpi/blink_new.py
+      register: string
+      ignore_errors: yes
+    
+    - name: check
+      debug:
+        msg: "{{string}}"
+
+    - command: python3 /home/user/rpi/blink_old.py
+      when: string.rc==1
